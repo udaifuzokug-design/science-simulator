@@ -1,27 +1,395 @@
+
 <!doctype html>
-<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>食塩水の濃度シミュレーター｜中学理科</title><meta name="description" content="食塩と水の質量を5g刻みで操作し、濃度の変化を学べる無料の中学理科教材。iPad・ロイロノートのWebカードに対応。">
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>食塩水の濃度シミュレーター</title>
 <style>
-*{box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;background:#f3f6fa;color:#14283e;margin:0;padding:16px;-webkit-text-size-adjust:100%}main{max-width:780px;margin:auto}h1{font-size:clamp(21px,4vw,29px);margin:8px 0}h2{font-size:19px;margin:0 0 12px}.muted{font-size:13px;color:#526579;line-height:1.6}.card{background:#fff;border:1px solid #dce5ef;border-radius:15px;padding:18px;margin:14px 0;box-shadow:0 2px 7px #20334b0b}.control{padding:12px 0;border-bottom:1px solid #e6edf5}.control:last-child{border:0}.control label{display:block;font-size:17px;font-weight:700;margin-bottom:10px}.control-row{display:flex;align-items:center;gap:9px;flex-wrap:wrap}.adjust{font-size:22px;font-weight:bold;background:#e9f1fb;color:#164d91;border:2px solid #9fbde3;border-radius:10px;min-width:52px;min-height:52px;cursor:pointer;touch-action:manipulation}.adjust:active{background:#c8def7}.number{font-size:22px;font-weight:700;text-align:right;width:116px;max-width:38vw;padding:10px;border:2px solid #397dc7;border-radius:10px;color:#14283e;background:white;-webkit-appearance:none;appearance:none}.unit{font-size:17px;font-weight:bold}.slider-wrap{padding:12px 4px 6px;min-height:52px}input[type=range]{display:block!important;visibility:visible!important;opacity:1!important;width:100%!important;height:42px!important;margin:0!important;padding:0!important;background:transparent!important;-webkit-appearance:none!important;appearance:none!important;touch-action:pan-y;cursor:pointer}input[type=range]::-webkit-slider-runnable-track{height:14px;background:#b7d4f4;border-radius:12px;border:1px solid #8bb5e4}input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:34px;height:34px;margin-top:-11px;background:#1769c2;border:4px solid white;border-radius:50%;box-shadow:0 0 0 2px #1769c2,0 2px 5px #0002}input[type=range]::-moz-range-track{height:14px;background:#b7d4f4;border-radius:12px}input[type=range]::-moz-range-thumb{width:30px;height:30px;background:#1769c2;border:3px solid white;border-radius:50%}.range-labels{display:flex;justify-content:space-between;color:#687c91;font-size:12px}.grid{display:grid;grid-template-columns:1fr 180px;gap:15px;align-items:center}.result-label{font-size:15px;color:#425a72}.value{font-size:23px;font-weight:800;margin:3px 0 17px}.big{font-size:40px;font-weight:800;color:#075ab0}.beaker{height:210px;width:155px;margin:auto;border:5px solid #769ab7;border-top:0;border-radius:0 0 22px 22px;position:relative;overflow:hidden;background:#f9fcff}.liquid{position:absolute;bottom:0;left:0;width:100%;height:0;background:rgba(35,112,220,.3);transition:height .2s,background-color .2s}.mark{position:absolute;top:10px;left:10px;z-index:1;font-size:13px;color:#334d66}.actions{display:flex;gap:9px;flex-wrap:wrap}.action{border:0;border-radius:10px;background:#1769c2;color:white;padding:13px 15px;font-size:15px;font-weight:700;min-height:48px;cursor:pointer;touch-action:manipulation}.action.secondary{background:#50657b}.action:active{filter:brightness(.85)}.formula{background:#edf5ff;padding:13px;border-radius:10px;line-height:1.8;overflow-wrap:anywhere;margin-top:12px}.hidden{display:none!important}.warn{color:#a34b00;font-size:13px}p{line-height:1.6}@media(max-width:480px){body{padding:10px}.card{padding:13px}.grid{grid-template-columns:1fr 125px}.beaker{width:110px;height:175px}.big{font-size:31px}.action{width:100%}.number{width:105px}}
-</style></head><body><main><h1>食塩水の濃度シミュレーター</h1><p class="muted">中学1年 理科｜バーを動かすか、数値を直接入力してみよう。＋・－ボタンでも変更できます。数値を直接入力したときは「完了」を押すと反映されます。</p>
-<section class="card"><div class="control"><label for="saltNumber">食塩の質量</label><div class="control-row"><button class="adjust" type="button" id="saltMinus" aria-label="食塩を5g減らす">－</button><input class="number" type="number" inputmode="decimal" id="saltNumber" min="0" max="200" step="5" value="20" aria-label="食塩の質量"><span class="unit">g</span><button class="adjust" type="button" id="saltPlus" aria-label="食塩を5g増やす">＋</button></div><div class="slider-wrap"><input type="range" id="saltRange" min="0" max="200" step="5" value="20" aria-label="食塩の質量スライダー"></div><div class="range-labels"><span>0 g</span><span>200 g</span></div></div>
-<div class="control"><label for="waterNumber">水の質量</label><div class="control-row"><button class="adjust" type="button" id="waterMinus" aria-label="水を5g減らす">－</button><input class="number" type="number" inputmode="decimal" id="waterNumber" min="0" max="500" step="5" value="180" aria-label="水の質量"><span class="unit">g</span><button class="adjust" type="button" id="waterPlus" aria-label="水を5g増やす">＋</button></div><div class="slider-wrap"><input type="range" id="waterRange" min="0" max="500" step="5" value="180" aria-label="水の質量スライダー"></div><div class="range-labels"><span>0 g</span><span>500 g</span></div></div></section>
-<section class="card"><h2>計算結果</h2><div class="grid"><div><div class="result-label">食塩水の質量</div><div class="value"><span id="total">200</span> g</div><div class="result-label">質量パーセント濃度</div><div class="big"><span id="pct">10.0</span> %</div></div><div class="beaker"><div class="mark">食塩水</div><div class="liquid" id="liquid"></div></div></div><p class="muted">※色は濃度を示す模式図です。実際の食塩水は透明です。溶解度・析出は扱いません。</p><p id="message" class="warn" aria-live="polite"></p></section>
-<section class="card"><h2>操作して確かめよう</h2><div class="actions"><button class="action" id="addWater" type="button">水を50g加える</button><button class="action" id="evaporate" type="button">水を50g蒸発させる</button><button class="action" id="removeSolution" type="button">食塩水を50g取り出す</button><button class="action secondary" id="reset" type="button">最初に戻す</button></div><p class="muted">取り出す操作では食塩と水が同じ割合で減ります。50g未満の場合は全量を取り出します。端数は小数第2位まで扱います。</p><button class="action secondary" id="formulaButton" type="button" aria-expanded="false">計算式を表示</button><div id="formula" class="formula hidden"></div></section>
-<section class="card"><h2>考えてみよう</h2><p>① 水だけを増やすと、濃度はどうなる？</p><p>② 水だけを蒸発させると、濃度はどうなる？</p><p>③ よく混ぜた食塩水を一部取り出すと、濃度はどうなる？</p><p class="muted">操作前と操作後の画面をスクリーンショットして、理由とともにロイロノートで提出しよう。</p></section></main>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  padding: 14px;
+  background: #f2f6fa;
+  color: #183047;
+  font-family: -apple-system, BlinkMacSystemFont, "Yu Gothic", sans-serif;
+}
+main { max-width: 1000px; margin: auto; }
+h1 { font-size: 26px; }
+h2 { font-size: 18px; margin: 0 0 14px; }
+.muted { color: #566b80; font-size: 13px; line-height: 1.6; }
+.workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(180px, 280px);
+  gap: 14px;
+  align-items: start;
+}
+.card {
+  background: white;
+  border: 1px solid #d9e4ef;
+  border-radius: 14px;
+  padding: 17px;
+  margin-bottom: 14px;
+}
+.control { margin-bottom: 20px; }
+.control label { font-weight: bold; display: block; margin-bottom: 8px; }
+.controls { display: flex; gap: 7px; align-items: center; flex-wrap: wrap; }
+button {
+  cursor: pointer;
+  touch-action: manipulation;
+  border: 0;
+  border-radius: 9px;
+  font-size: 15px;
+  min-height: 46px;
+  padding: 10px 12px;
+  background: #1769c2;
+  color: white;
+  font-weight: bold;
+}
+button.secondary { background: #526a81; }
+.adjust {
+  font-size: 22px;
+  min-width: 48px;
+  background: #e8f2ff;
+  color: #15559d;
+  border: 1px solid #9fbde3;
+}
+.number {
+  font-size: 20px;
+  width: 100px;
+  min-height: 46px;
+  border: 2px solid #4385cb;
+  border-radius: 9px;
+  padding: 7px;
+  text-align: right;
+}
+input[type=range] {
+  width: 100%;
+  height: 40px;
+  accent-color: #1769c2;
+}
+.ends {
+  display: flex;
+  justify-content: space-between;
+  color: #62788b;
+  font-size: 12px;
+}
+.actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.result {
+  font-size: 38px;
+  font-weight: 800;
+  color: #075ab0;
+  margin: 8px 0;
+}
+.formula {
+  background: #edf5ff;
+  padding: 12px;
+  border-radius: 9px;
+  margin-top: 12px;
+}
+.hidden { display: none; }
+.visual { position: sticky; top: 10px; text-align: center; }
+.beaker-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: 9px;
+}
+.scale {
+  height: 245px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #47627e;
+  text-align: right;
+}
+.beaker {
+  position: relative;
+  height: 245px;
+  width: 155px;
+  border: 5px solid #779bb9;
+  border-top: 0;
+  border-radius: 0 0 18px 18px;
+  overflow: hidden;
+  background: #f8fcff;
+}
+.liquid {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 0;
+  background: rgba(42,132,220,.45);
+  transition: height .2s ease, background-color .2s;
+}
+.ticks {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  pointer-events: none;
+}
+.ticks span {
+  border-top: 1px dashed #6489a6;
+  width: 100%;
+}
+.level {
+  position: absolute;
+  bottom: 8px;
+  left: 0;
+  right: 0;
+  font-weight: bold;
+  color: #153c65;
+  text-shadow: 0 1px 3px white;
+  pointer-events: none;
+}
+.readout { font-weight: bold; margin-top: 12px; }
+.warning { color: #a44d00; font-size: 13px; }
+
+@media(max-width:600px) {
+  body { padding: 8px; }
+  .workspace { grid-template-columns: minmax(0,1fr) 145px; gap: 7px; }
+  .card { padding: 10px; }
+  .visual { padding: 8px; }
+  .visual h2 { font-size: 15px; }
+  .beaker { width: 85px; height: 180px; }
+  .scale { height: 180px; font-size: 10px; }
+  .number { width: 70px; font-size: 17px; }
+  .adjust { min-width: 37px; padding: 6px; }
+  .controls { gap: 4px; }
+  .result { font-size: 28px; }
+  .visual .muted { font-size: 10px; }
+  .actions button { width: 100%; }
+}
+</style>
+</head>
+<body>
+<main>
+<h1>食塩水の濃度シミュレーター</h1>
+<p class="muted">中学1年 理科｜食塩と水を5g刻みで変え、食塩水の量と濃度を調べよう。</p>
+
+<div class="workspace">
+<div>
+<section class="card">
+<h2>食塩と水の質量</h2>
+
+<div class="control">
+<label for="saltNumber">食塩の質量</label>
+<div class="controls">
+<button class="adjust" id="saltMinus" type="button">−</button>
+<input id="saltNumber" class="number" type="number" min="0" max="200" step="5" value="20">
+<span>g</span>
+<button class="adjust" id="saltPlus" type="button">＋</button>
+</div>
+<input id="saltRange" type="range" min="0" max="200" step="5" value="20">
+<div class="ends"><span>0g</span><span>200g</span></div>
+</div>
+
+<div class="control">
+<label for="waterNumber">水の質量</label>
+<div class="controls">
+<button class="adjust" id="waterMinus" type="button">−</button>
+<input id="waterNumber" class="number" type="number" min="0" max="500" step="5" value="180">
+<span>g</span>
+<button class="adjust" id="waterPlus" type="button">＋</button>
+</div>
+<input id="waterRange" type="range" min="0" max="500" step="5" value="180">
+<div class="ends"><span>0g</span><span>500g</span></div>
+</div>
+
+<button id="formulaButton" class="secondary" type="button">計算式を表示</button>
+<div id="formula" class="formula hidden"></div>
+</section>
+
+<section class="card">
+<h2>計算結果</h2>
+<div>食塩水の質量：<strong id="total">200</strong> g</div>
+<p>質量パーセント濃度</p>
+<div id="pct" class="result">10.0 %</div>
+<button id="toggle" class="secondary" type="button">濃度を隠す</button>
+<p id="warning" class="warning"></p>
+</section>
+
+<section class="card">
+<h2>考えてみよう</h2>
+<p>① 水を加えると濃度はどうなる？</p>
+<p>② 水を蒸発させると濃度はどうなる？</p>
+<p>③ 食塩水を取り出すと濃度はどうなる？</p>
+<p class="muted">操作前後の画面をスクリーンショットし、理由とともにロイロノートで提出しよう。</p>
+</section>
+
+<section class="card">
+<h2>操作して確かめよう</h2>
+<div class="actions">
+<button id="addWater" type="button">水を50g加える</button>
+<button id="evaporate" type="button">水を50g蒸発させる</button>
+<button id="remove" type="button">食塩水を50g取り出す</button>
+<button id="reset" class="secondary" type="button">最初に戻す</button>
+</div>
+<p class="muted">食塩水を取り出すと、食塩と水が同じ割合で減ります。</p>
+</section>
+</div>
+
+<aside class="card visual">
+<h2>ビーカーの可視化</h2>
+<div class="beaker-wrap">
+<div class="scale">
+<span>700g</span>
+<span>525g</span>
+<span>350g</span>
+<span>175g</span>
+<span>0g</span>
+</div>
+<div class="beaker">
+<div class="liquid" id="liquid"></div>
+<div class="ticks">
+<span></span><span></span><span></span><span></span><span></span>
+</div>
+<div class="level" id="level">200g</div>
+</div>
+</div>
+<div class="readout">現在：<span id="beakerTotal">200</span> g</div>
+<p class="muted">液面は食塩水の合計質量に比例して上下します（満水700g）。実際の体積ではなく、質量を高さで表した模式図です。</p>
+</aside>
+</div>
+</main>
+
 <script>
-(function(){'use strict';
-function el(id){return document.getElementById(id)}
-var salt=20,water=180,formulaVisible=false;
-function clamp(v,min,max){v=Number(v);if(!isFinite(v))return min;return Math.max(min,Math.min(max,Math.round(v*100)/100))}
-function fmt(n){return String(Number(n.toFixed(2)))}
-function update(){salt=clamp(salt,0,200);water=clamp(water,0,500);el('saltNumber').value=fmt(salt);el('waterNumber').value=fmt(water);el('saltRange').value=salt;el('waterRange').value=water;var total=salt+water,pct=total>0?100*salt/total:0;el('total').textContent=fmt(total);el('pct').textContent=pct.toFixed(1);el('liquid').style.height=Math.min(100,total/700*100)+'%';el('liquid').style.backgroundColor='rgba(35,112,220,'+(.13+Math.min(pct,100)/100*.75)+')';el('formula').textContent=total>0?'食塩の質量 ÷ 食塩水の質量 × 100 = '+fmt(salt)+' ÷ '+fmt(total)+' × 100 = '+pct.toFixed(1)+'％':'食塩水が0gのため濃度は定義できません。';el('message').textContent=total===0?'食塩水が0gのため、濃度は定義できません。':'';}
-function change(which,v){v=Math.round(Number(v)/5)*5;if(which==='salt')salt=clamp(v,0,200);else water=clamp(v,0,500);update()}
-function listen(id,event,fn){el(id).addEventListener(event,fn,false)}
-listen('saltRange','input',function(){change('salt',this.value)});listen('saltRange','change',function(){change('salt',this.value)});listen('waterRange','input',function(){change('water',this.value)});listen('waterRange','change',function(){change('water',this.value)});
-listen('saltNumber','change',function(){change('salt',this.value)});listen('waterNumber','change',function(){change('water',this.value)});
-listen('saltMinus','click',function(){change('salt',salt-5)});listen('saltPlus','click',function(){change('salt',salt+5)});listen('waterMinus','click',function(){change('water',water-5)});listen('waterPlus','click',function(){change('water',water+5)});
-listen('addWater','click',function(){change('water',water+50)});listen('evaporate','click',function(){change('water',water-50)});
-listen('removeSolution','click',function(){var t=salt+water;if(t<=0)return;var f=Math.max(0,t-50)/t;salt=Math.round(salt*f*100)/100;water=Math.round(water*f*100)/100;update()});
-listen('reset','click',function(){salt=20;water=180;update()});listen('formulaButton','click',function(){formulaVisible=!formulaVisible;el('formula').className=formulaVisible?'formula':'formula hidden';this.textContent=formulaVisible?'計算式を隠す':'計算式を表示';this.setAttribute('aria-expanded',String(formulaVisible))});update();
+(function () {
+  "use strict";
+
+  const $ = id => document.getElementById(id);
+  let salt = 20;
+  let water = 180;
+  let hidden = false;
+  let showFormula = false;
+
+  function fmt(x) {
+    return String(Number(x.toFixed(2)));
+  }
+
+  function clamp(x, min, max) {
+    return Math.max(min, Math.min(max, x));
+  }
+
+  function render() {
+    const total = salt + water;
+    const pct = total > 0 ? salt / total * 100 : null;
+
+    $("saltNumber").value = fmt(salt);
+    $("waterNumber").value = fmt(water);
+    $("saltRange").value = String(Math.round(salt / 5) * 5);
+    $("waterRange").value = String(Math.round(water / 5) * 5);
+
+    $("total").textContent = fmt(total);
+    $("pct").textContent = hidden
+      ? "？？？ %"
+      : pct === null ? "計算できません" : pct.toFixed(1) + " %";
+
+    $("toggle").textContent = hidden ? "濃度を表示する" : "濃度を隠す";
+
+    $("liquid").style.height = (total / 700 * 100) + "%";
+    $("liquid").style.backgroundColor =
+      "rgba(42,132,220," +
+      (0.22 + (pct === null ? 0 : Math.min(pct,100) / 100 * 0.6)) +
+      ")";
+
+    $("level").textContent = fmt(total) + "g";
+    $("beakerTotal").textContent = fmt(total);
+
+    $("warning").textContent = total === 0
+      ? "食塩水が0gのため、濃度は定義できません。"
+      : "";
+
+    $("formula").textContent = total === 0
+      ? "食塩水が0gのため計算できません。"
+      : fmt(salt) + " ÷ " + fmt(total) +
+        " × 100 = " + pct.toFixed(1) + " %";
+
+    $("formula").classList.toggle("hidden", !showFormula);
+    $("formulaButton").textContent = showFormula
+      ? "計算式を隠す"
+      : "計算式を表示";
+  }
+
+  function change(which, val) {
+    const max = which === "salt" ? 200 : 500;
+    const n = Number(val);
+    if (!Number.isFinite(n)) return;
+
+    const v = clamp(Math.round(n / 5) * 5, 0, max);
+
+    if (which === "salt") {
+      salt = v;
+    } else {
+      water = v;
+    }
+    render();
+  }
+
+  function bind(which) {
+    const key = which === "salt" ? "salt" : "water";
+
+    $(key + "Range").addEventListener("input", e => {
+      change(which, e.target.value);
+    });
+
+    $(key + "Number").addEventListener("change", e => {
+      change(which, e.target.value);
+    });
+
+    $(key + "Minus").addEventListener("click", () => {
+      change(which, (which === "salt" ? salt : water) - 5);
+    });
+
+    $(key + "Plus").addEventListener("click", () => {
+      change(which, (which === "salt" ? salt : water) + 5);
+    });
+  }
+
+  bind("salt");
+  bind("water");
+
+  $("addWater").addEventListener("click", () => {
+    water = Math.min(500, water + 50);
+    render();
+  });
+
+  $("evaporate").addEventListener("click", () => {
+    water = Math.max(0, water - 50);
+    render();
+  });
+
+  $("remove").addEventListener("click", () => {
+    const total = salt + water;
+    if (total === 0) return;
+
+    const remain = Math.max(0, total - 50) / total;
+    salt = Math.round(salt * remain * 100) / 100;
+    water = Math.round(water * remain * 100) / 100;
+    render();
+  });
+
+  $("reset").addEventListener("click", () => {
+    salt = 20;
+    water = 180;
+    render();
+  });
+
+  $("toggle").addEventListener("click", () => {
+    hidden = !hidden;
+    render();
+  });
+
+  $("formulaButton").addEventListener("click", () => {
+    showFormula = !showFormula;
+    render();
+  });
+
+  render();
 })();
-</script></body></html>
+</script>
+</body>
+</html>
